@@ -51,7 +51,7 @@ Class Category
 	public function get_all()
 	{
 		$DB = Database::newInstance();
-		return $DB->read("select * from categories order by id desc");
+		return $DB->read("select * from categories order by views desc");
 	}
 
 	public function get_one($id)
@@ -69,7 +69,13 @@ Class Category
 
 		$DB = Database::newInstance();
 		$data = $DB->read("select * from categories where category like :name limit 1", ["name"=>$name]);
-		return $data[0];
+		if (is_array($data)) {
+			// code...
+			$DB->read("update categories set views = views + 1 where id = :id limit 1", ["id"=>$data[0]->id]);  //insert views by counting
+
+			return $data[0];
+		}
+
 	}
 	
 
@@ -85,7 +91,7 @@ Class Category
 				$color = $cat_row->disabled ? "label label-warning label-mini" : "label label-info label-mini";
 				$cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enable";
 				$args = $cat_row->id.",'".$cat_row->disabled."'";
-				$edit_args = $cat_row->id.",'".$cat_row->category."',".$cat_row->parent;
+				$edit_args = $cat_row->id.",'".addslashes($cat_row->category)."',".$cat_row->parent;
 				$parent = "";
 
 				foreach ($cats as $cat_row2) {
@@ -97,7 +103,7 @@ Class Category
 
 				$result .= "<tr>";
 					$result .= '
-						<td><a href="basic_table.html#">'.$cat_row->category.'</a></td>
+						<td><a>'.$cat_row->category.'</a></td>
 	                    	<td><a>'.$parent.'</a></td>
 	                    	<td><span onclick="disable_row('.$args.')" class="'.$color.'" style="cursor:pointer;">'.$cat_row->disabled.'</span></td>
 	                      	<td>
