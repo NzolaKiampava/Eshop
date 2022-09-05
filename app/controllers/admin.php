@@ -159,17 +159,27 @@ Class Admin extends Controller
 		}else
 		if($type == "slider_images"){
 
-			$data['action'] = "show";
+			$data['action'] = "show";				
+			$Slider = $this->load_model('Slider');
+			
+			//read all slider image
+			$data['rows'] = $Slider->get_all();
+
 			if(isset($_GET['action']) && $_GET['action'] == "add"){
 				$data['action'] = "add";
 
 				//if new row was posted
+
 				if(count($_POST) > 0)
 				{
 					//show($_POST);
+					//show($_FILES);
+					$Image = $this->load_model('Image');
+					$data['errors'] = $Slider->create($_POST, $_FILES, $Image);
+					//show($data['errors']);
 					$data['POST'] = $_POST;
-					//header("Location: " . ROOT . "admin/settings/slider_images");
-					//die;
+					header("Location: " . ROOT . "admin/settings/slider_images");
+					die;
 				}
 
 			}else
@@ -198,5 +208,146 @@ Class Admin extends Controller
 		$this->view("admin/settings", $data);
 	}
 
+	public function messages($type = '')
+	{
+		$type = "Messages";
+		$mode = "read";
+
+		$User = $this->load_model('User');
+		$Message = $this->load_model('Message');
+
+		$user_data = $User->check_login(true, ["admin"]);
+
+		if(is_object($user_data)){
+			$data['user_data'] = $user_data;
+		}
+		
+		if(isset($_GET['delete']))
+		{
+			$mode = "delete";
+		} 
+
+		if(isset($_GET['delete_confirmed']))
+		{
+			$mode = "delete_confirmed";
+			$id = $_GET['delete_confirmed'];
+			$Message->delete($id);
+		}
+		
+
+		if ($mode == "delete") {
+			$id = $_GET['delete'];
+			$messages = $Message->get_one($id);
+		}else{
+			$messages = $Message->get_all();
+		}
+		
+		$data['mode'] = $mode;
+		$data['messages'] = $messages;
+		$data['page_title'] = "Admin - $type";
+		$data['current_page'] = "messages";
+		$this->view("admin/messages", $data);
+
+	}
+
+	public function blogs($type = '')
+	{
+		$type = "Blog Posts";
+		$mode = "read";
+
+		$User = $this->load_model('User');
+		$post_class = $this->load_model('post');
+		$image_class = $this->load_model('Image');
+
+		$user_data = $User->check_login(true, ["admin"]);
+
+		if(is_object($user_data)){
+			$data['user_data'] = $user_data;
+		}
+		
+		if(isset($_GET['add_new']))
+		{
+			$mode = "add_new";
+
+		} 
+
+		if(isset($_GET['edit']))
+		{
+			$mode = "edit";
+		} 
+
+		if(isset($_GET['delete']))
+		{
+			$mode = "delete";
+		} 
+		
+		if(isset($_GET['delete_confirmed']))
+		{
+			$mode = "delete_confirmed";
+			$id = $_GET['delete_confirmed'];
+			$post_class->delete($id);
+		}
+		
+		if ($mode == "edit") {
+			$id = $_GET['edit'];
+			$blogs = $post_class->get_one($id);
+			$data['POST'] = (array)$blogs;
+			
+		}
+		else
+			if ($mode == "delete") {
+			$id = $_GET['delete'];
+			$blogs = $post_class->get_one($id);
+			$image_class = $this->load_model('Image');
+
+			if(file_exists($blogs->image)){
+					$blogs->image = $image_class->get_thumb_post($blogs->image);
+				}
+				// find the user by his user_url
+				$blogs->user_data = $User->get_user($blogs->user_url);
+				
+
+			$data['POST'] = (array)$blogs;
+		}else{
+			$blogs = $post_class->get_all();
+			
+			if ($blogs) {
+				foreach ($blogs as $key => $row) {
+					// code...
+					if(file_exists($blogs[$key]->image)){
+						$blogs[$key]->image = $image_class->get_thumb_post($blogs[$key]->image);
+					}
+					// find the user by his user_url
+					$blogs[$key]->user_data = $User->get_user($blogs[$key]->user_url);
+				}
+			}
+		}
+
+		//if something was posted
+		if(count($_POST) > 0)
+		{
+			$post = $this->load_model('post');
+			if ($mode == "edit"){
+				$post_class->edit($_POST,$_FILES,$image_class);
+			}
+			else{
+				$post_class->create($_POST,$_FILES,$image_class);
+			}
+
+			if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
+				$data['errors'] = $_SESSION['error'];
+				$data['POST'] = $_POST;
+			}else{
+				redirect("admin/blogs");
+			}
+		}		
+		
+		$data['mode'] = $mode;
+		$data['blogs'] = $blogs;
+		$data['page_title'] = "Admin - $type";
+		$data['current_page'] = "blogs";
+		$this->view("admin/blogs", $data);
+
+	}
 
 }
