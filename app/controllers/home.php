@@ -58,7 +58,7 @@ Class Home extends Controller
 		$data['categories'] = $category->get_all();
 
 		//get products for lower segment
-		$data['segment_data'] = $this->get_segment_data($DB,$data['categories']); 
+		$data['segment_data'] = $this->get_segment_data($DB,$data['categories'],$image_class); 
 
 		//get all slider  content
 		$Slider = $this->load_model('Slider');
@@ -77,7 +77,7 @@ Class Home extends Controller
 	}
 
 	//get segment data
-	private function get_segment_data($DB,$categories)
+	private function get_segment_data($DB,$categories,$image_class)
 	{
 		$mycats = array();
 		$results = array();
@@ -95,6 +95,12 @@ Class Home extends Controller
 				$cat->category = str_replace(" ", "_", $cat->category);
 				$cat->category = preg_replace("/\W+/", "", $cat->category);  //replace anything that isn't a word from category name to ""   (\w => anything that isnt a word, + => more than one item)
 
+				//crop images
+				foreach ($ROWS as $key => $row) {
+					// code...
+					$ROWS[$key]->image = $image_class->get_thumb_post($ROWS[$key]->image);
+				}
+				
 				$results[$cat->category] = $ROWS; //ROWS return array of object, we'll add on result $cat->category, many ROWS ($results[$cat->name])
 
 				$num++;
