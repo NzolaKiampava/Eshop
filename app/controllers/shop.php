@@ -5,8 +5,14 @@ Class Shop extends Controller
 
 	public function index()
 	{
-		$search = false;
+
+		//paginatin formula
+		$limit = 4;
+		$page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
+		$offset = ($page_number - 1) * $limit;
+
 		//check if is a search
+		$search = false;
 		if(isset($_GET['find']))
 		{
 			$find = addslashes($_GET['find']);
@@ -24,9 +30,9 @@ Class Shop extends Controller
 		
 		if($search){
 			$arr['description'] = "%". $find . "%";
-			$ROWS = $DB->read("select * from products where description like :description", $arr);
+			$ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
 		}else{
-			$ROWS = $DB->read("select * from products");
+			$ROWS = $DB->read("select * from products limit $limit offset $offset");
 		}
 
 		$data['page_title'] = "Shop";
@@ -49,6 +55,11 @@ Class Shop extends Controller
 
 	public function category($cat_find = '')
 	{
+		//paginatin formula
+		$limit = 4;
+		$page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
+		$offset = ($page_number - 1) * $limit;
+
 		$User = $this->load_model('User');
 		$category = $this->load_model('Category');
 		$image_class = $this->load_model('Image');
@@ -66,7 +77,7 @@ Class Shop extends Controller
 			$cat_id = $check->id;
 		}
 		
-		$ROWS = $DB->read("select * from products where category = :cat_id", ["cat_id"=>$cat_id]);
+		$ROWS = $DB->read("select * from products where category = :cat_id limit $limit offset $offset", ["cat_id"=>$cat_id]);
 
 
 		$data['page_title'] = "Shop";
