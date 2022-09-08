@@ -9,6 +9,7 @@ Class Shop extends Controller
 		//paginatin formula
 		$limit = 4;
 		$page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
+		$page_number = $page_number < 1 ? 1 : $page_number;
 		$offset = ($page_number - 1) * $limit;
 
 		//check if is a search
@@ -48,6 +49,7 @@ Class Shop extends Controller
 		$category = $this->load_model('category');
 		$data['categories'] = $category->get_all();
 
+		$data['page_links'] = $this->get_pagination();
 		$data['ROWS'] = $ROWS;
 		$data['show_search'] = true;
 		$this->view("shop", $data);
@@ -58,6 +60,7 @@ Class Shop extends Controller
 		//paginatin formula
 		$limit = 4;
 		$page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
+		$page_number = $page_number < 1 ? 1 : $page_number;
 		$offset = ($page_number - 1) * $limit;
 
 		$User = $this->load_model('User');
@@ -95,6 +98,27 @@ Class Shop extends Controller
 		$data['ROWS'] = $ROWS;
 		$data['show_search'] = true;
 		$this->view("shop", $data);
+	}
+
+	private function get_pagination()
+	{
+		$links = (object)[];                 //converting links to object
+		$links->prev = "";                   //previous link
+		$links->next = "";					 //next link
+		$query_string = str_replace("url=", "", $_SERVER['QUERY_STRING']);
+
+		$page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
+		$page_number = $page_number < 1 ? 1 : $page_number;
+
+		$next_page = $page_number + 1;
+		$prev_page = ($page_number > 1) ? ($page_number - 1) : 1;
+
+		$current_link = ROOT . $query_string;
+
+		$links->prev = preg_replace("/pg=[^&?=]+/", "pg=" . $prev_page, $current_link);
+		$links->next = preg_replace("/pg=[^&?=]+/", "pg=" . $next_page, $current_link);
+
+		return $links;
 	}
 
 
