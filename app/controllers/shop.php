@@ -114,12 +114,15 @@ Class Shop extends Controller
 		$prev_page = ($page_number > 1) ? ($page_number - 1) : 1;
 
 		$current_link = ROOT . $query_string;
+		if(!strstr($query_string, "pg=")){    //if pg not contain on $query string
+			$current_link .= "&pg=1";
+		}
 
 		$links->prev = preg_replace("/pg=[^&?=]+/", "pg=" . $prev_page, $current_link);
 		$links->next = preg_replace("/pg=[^&?=]+/", "pg=" . $next_page, $current_link);
+		$links->current = $page_number;
 
 		return $links;
 	}
-
 
 }
