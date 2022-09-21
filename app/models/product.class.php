@@ -14,7 +14,7 @@ Class Product
 		$arr['price']       = ucwords($DATA->price);
 		$arr['date']        = date("Y-m-d H:i:s");
 		$arr['user_url']    = $_SESSION['user_url'];
-		$arr['slag']        = $this->str_to_url($DATA->description);
+		$arr['slag']        = str_to_url($DATA->description);
 
 		if(!preg_match("/^[a-zA-Z 0-9._\-,]+$/", trim($arr['description'])))
 		{
@@ -50,6 +50,8 @@ Class Product
 		$arr['image3'] = "";
 		$arr['image4'] = "";
 
+		//$allowed = array();
+		//$allowed = ["image/jpeg", "image/png"];
 		$allowed[] = "image/jpeg";
 		$size = 10;
 		$size = ($size * 1024 * 1024)/2;  //the max size is 10MB
@@ -66,16 +68,26 @@ Class Product
 			{
 				if ($img_row['size'] < $size) 
 				{
+					/* testing to allow png and jpeg image
+
+					if($img_row['type'] == "image/jpeg"){
+						$destination = $folder . $image_class->generate_filename(60) . ".jpg";
+					}elseif($img_row['type'] == "image/png"){
+						$destination = $folder . $image_class->generate_filename(60) . ".png";
+					}
+					*/
+
 					$destination = $folder . $image_class->generate_filename(60) . ".jpg";
 					move_uploaded_file($img_row['tmp_name'], $destination);
 					$arr[$key] = $destination;
 					$image_class->resize_image($destination,$destination,1500,1500);
+					//$image_class->resize_image($destination,$FILES,$destination,1500,1500);
 				}else
 				{
 					$_SESSION['error'] .= $key . " Is bigger than require size<br>";
 				}
 			}else{
-				$_SESSION['error'] .= " This type of image is not allowed, try for jpeg";
+				$_SESSION['error'] .= " This type of image is not allowed, try for jpeg or png. Or convert the image to jpeg typing the following link in your browser: https://cloudconvert.com/";
 			}
 		}
 
@@ -121,6 +133,8 @@ Class Product
 			$_SESSION['error'] .= "Please enter a valid price";
 		}
 
+		//$allowed = array();
+		//$allowed = ["image/jpeg", "image/png"];
 		$allowed[] = "image/jpeg";
 		$size = 10;
 		$size = ($size * 1024 * 1024)/2;
@@ -136,18 +150,28 @@ Class Product
 			if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) 
 			{
 				if ($img_row['size'] < $size) 
-				{
+				{	
+					/* testing to allow png and jpeg image
+
+					if($img_row['type'] == "image/jpeg"){
+						$destination = $folder . $image_class->generate_filename(60) . ".jpg";
+					}elseif($img_row['type'] == "image/png"){
+						$destination = $folder . $image_class->generate_filename(60) . ".png";
+					}
+					*/
+
 					$destination = $folder . $image_class->generate_filename(60) . ".jpg";
 					move_uploaded_file($img_row['tmp_name'], $destination);
 					$arr[$key] = $destination;
 					$image_class->resize_image($destination,$destination,1500,1500);
+					//$image_class->resize_image($destination,$FILES,$destination,1500,1500);
 					$image_string .= ",". $key ." = :".$key;
 				}else
 				{
 					$_SESSION['error'] .= $key . " Is bigger than require size<br>";
 				}
 			}else{
-				$_SESSION['error'] .= " This type of image is not allowed, try for jpeg";
+				$_SESSION['error'] .= " This type of image is not allowed, try for jpeg or png";
 			}
 		}
 
@@ -217,15 +241,6 @@ Class Product
 		}
 
 		return $result;
-	}
-
-	public function str_to_url($url) {
-		$url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
-		$url = trim($url, "-");
-		$url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
-		$url = strtolower($url);
-		$url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-		return $url;
 	}
 
 }
