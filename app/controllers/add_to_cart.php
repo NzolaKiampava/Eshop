@@ -48,12 +48,27 @@ Class Add_to_cart extends Controller
 		$this->set_redirect();
 
 		$id = esc($id);
+		$DB = Database::newInstance();
+		//$pro = $DB->read("select quantity from products where id = '$id'");
+		//show($pro[0]->quantity);
 		if (isset($_SESSION['CART'])) {
 			foreach ($_SESSION['CART'] as $key => $item) {
 				// code...
 				if ($item['id'] == $id) {
 					// code...
 					$_SESSION['CART'][$key]['qty'] += 1;
+					
+					/*  Testing for simulation of decrease products
+						$num = $_SESSION['CART'][$key]['qty'];
+						$qty = $DB->read("select quantity from products where id = '$id'");
+						$qty = $qty[0]->quantity - $num;
+						if($qty < 0){
+							$qty = 0;
+						}
+						//show($qty);
+						$DB->read("update products set quantity = '$qty' where id = '$id'");
+					*/
+
 					break;
 				}
 			}
@@ -70,8 +85,11 @@ Class Add_to_cart extends Controller
 				// code...
 				if ($item['id'] == $id) {
 					// code...
-					$_SESSION['CART'][$key]['qty'] -= 1;
-					break;
+					if($_SESSION['CART'][$key]['qty'] > 1)
+					{
+						$_SESSION['CART'][$key]['qty'] -= 1;
+						break;
+					}
 				}
 			}
 		}
