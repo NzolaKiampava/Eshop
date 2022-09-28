@@ -119,6 +119,7 @@ Class Checkout extends Controller
 					// code...
 					if($row->id == $item['id']){
 						$ROWS[$key]->cart_qty = $item['qty'];  //creating cart_qty key to get qty
+
 						break;  //moveout this loop to up loop, and do always the same process
 					}
 				}
@@ -129,6 +130,22 @@ Class Checkout extends Controller
 		if ($ROWS) {
 			foreach ($ROWS as $key => $row) {
 				// code...
+
+				//testing for decrease quantity products
+					//show($row->cart_qty);
+					//show($row->id);
+					//show($row->description);
+					//show($row->quantity);
+
+					$qty = $row->quantity - $row->cart_qty;
+					if($qty < 0){
+						$qty = 0;
+					}
+					//show($qty);
+					$DB->read("update products set quantity = '$qty' where id = '$row->id'");
+					show($row->quantity);
+				
+
 				$mytotal = $row->price * $row->cart_qty;
 
 				$data['sub_total'] += $mytotal;
@@ -142,7 +159,7 @@ Class Checkout extends Controller
 		*/
 
 		$data['order_details'] = $ROWS;
-		$data['orders'][] = $_SESSION['POST_DATA'];
+		$data['orders'][] = isset($_SESSION['POST_DATA']) ? $_SESSION['POST_DATA'] : "";
 		
 		if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_SESSION['POST_DATA'])){
 
@@ -170,6 +187,8 @@ Class Checkout extends Controller
 	public function thank_you()
 	{
 		$data['page_title'] = "Thank you";
+
+		show($_SESSION['CART']);
 		$this->view("checkout.thank_you", $data);
 
 	}
