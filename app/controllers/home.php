@@ -5,6 +5,10 @@ Class Home extends Controller
 		
 	public function index()
 	{
+		//paginatin formula
+		$limit = 9;
+		$offset = Page::get_offset($limit);
+
 		$search = false;
 		//check if is a search
 		if(isset($_GET['find']))
@@ -25,9 +29,9 @@ Class Home extends Controller
 		//read for main post
 		if($search){
 			$arr['description'] = "%". $find . "%";
-			$ROWS = $DB->read("select * from products where description like :description", $arr);
+			$ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
 		}else{
-			$ROWS = $DB->read("select * from products");
+			$ROWS = $DB->read("select * from products where quantity > 0 order by id desc limit $limit offset $offset");
 		}
 		if ($ROWS) {
 			foreach ($ROWS as $key => $row) {
@@ -42,7 +46,7 @@ Class Home extends Controller
 		$carousel_page_count = 3;
 		for ($i=0; $i < $carousel_page_count; $i++) { 
 			
-			$Slider_ROWS[$i] = $DB->read("select * from products where rand() limit 3");
+			$Slider_ROWS[$i] = $DB->read("SELECT *, quantity > 0 from products where rand() limit 3");
 			if ($Slider_ROWS[$i]) {
 				foreach ($Slider_ROWS[$i] as $key => $row) {
 					// code...
@@ -88,7 +92,7 @@ Class Home extends Controller
 			$mycats[] = $cat;
 		
 			$arr['id'] = $cat->id;
-			$ROWS = $DB->read("select * from products where category = :id order by rand() limit 5", $arr);
+			$ROWS = $DB->read("select * from products where category = :id and quantity > 0 order by rand() limit 4", $arr);
 
 			if (is_array($ROWS)) {
 
