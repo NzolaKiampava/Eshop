@@ -27,7 +27,11 @@ Class Admin extends Controller
 		}
 
 	    $DB = Database::newInstance();
-	    $categories_all = $DB->read("select * from categories order by id desc");
+	    //paginatin formula
+		$limit = 10;
+		$offset = Page::get_offset($limit);
+
+	    $categories_all = $DB->read("select * from categories order by id desc limit $limit offset $offset");
 	    $categories = $DB->read("select * from categories where disabled = 0 order by id desc");
 	    
 
@@ -43,6 +47,14 @@ Class Admin extends Controller
 
 	public function products()
 	{
+		$search = false;
+
+		if(isset($_GET['search']))
+		{
+			//show($_GET);
+			$search = true;
+		}
+
 		$User = $this->load_model('User');
 		$user_data = $User->check_login(true, ["admin"]);
 
@@ -51,9 +63,108 @@ Class Admin extends Controller
 		}
 
 	    $DB = Database::newInstance();
-	    $products = $DB->read("select * from products order by id desc");
+	    //paginatin formula
+		$limit = 10;
+		$offset = Page::get_offset($limit);
 
-	    $categories = $DB->read("select * from categories where disabled = 0 order by id desc");
+		if ($search) {
+
+			$params = array();
+
+			//add description if is available
+			if(isset($_GET['description']) && trim($_GET['description'] != "")) {
+				$params['description'] = $_GET['description'];
+			}
+
+			//add category if is available
+			if(isset($_GET['category']) && trim($_GET['category'] != "--Select Category--")) {
+				$params['category'] = $_GET['category'];
+			}
+
+			//add year if is available
+			if(isset($_GET['year']) && trim($_GET['year'] != "--Select Year--")) {
+				$params['year'] = $_GET['year'];
+			}
+			
+			//add min-price if is available
+			if(isset($_GET['min-price']) && trim($_GET['max-price'] != "0") && trim($_GET['min-price'] != "") && trim($_GET['max-price'] != "")) {
+				$params['min-price'] = (float)$_GET['min-price'];
+				$params['max-price'] = (float)$_GET['max-price'];
+			}
+
+			//add max-qty if is available
+			if(isset($_GET['min-qty']) && trim($_GET['max-qty'] != "0") && trim($_GET['min-qty'] != "") && trim($_GET['max-qty'] != "")) {
+				$params['min-qty'] = (int)$_GET['min-qty'];
+				$params['max-qty'] = (int)$_GET['max-qty'];
+			}
+			
+			
+			//add description if is available
+			$brands = array();
+
+			foreach ($_GET as $key => $value) {
+
+				// if in key contains brands
+				if(strstr($key, "brand-")) {
+					$brands[] = $value;
+				}
+			} 
+
+
+			if(count($brands) > 0) {
+				$params['brands'] = implode("','", $brands);
+
+			}
+
+			$query = "
+				SELECT prod.*,cat.category as category_name,brands.brand as brand_name FROM products as prod join categories as cat on cat.id = prod.category join brands on brands.id = prod.brand ";
+
+				if(count($params) > 0){
+					$query .= " WHERE ";
+				}
+
+				if(isset($params['description'])) {
+					$query .= " prod.description like '%$params[description]%' AND ";
+				}
+
+				if(isset($params['category'])) {
+					$query .= " cat.id = '$params[category]' AND ";
+				}
+
+				
+				if(isset($params['brands'])) {
+					$query .= " brands.id in ('". $params['brands'] ."') AND ";  //implode was used to convert array to string and in between the string set','
+				}
+
+				if(isset($params['min-price'])) {
+					$query .= " (prod.price BETWEEN '".$params['min-price']."' AND '".$params['max-price']."') AND ";
+				}
+
+				if(isset($params['min-qty'])) {
+					$query .= " (prod.quantity BETWEEN '".$params['min-qty']."' AND '".$params['max-qty']."') AND ";
+				}
+
+				if(isset($params['year'])) {
+					$query .= " YEAR(prod.date) = '$params[year]' AND ";
+				}
+
+			$query = trim($query); //REMOVE SPACES
+			$query = trim($query,'AND');  //REMOVE AND CLAUSULE
+			$query .= "
+				order by prod.id desc limit $limit offset $offset
+			";
+
+			//show($query);
+			$products = $DB->read($query);
+
+		} else {
+			$products = $DB->read("SELECT prod.*, brands.brand as brand_name, cat.category as category_name FROM products as prod left join brands on brands.id = prod.brand join categories as cat on cat.id = prod.category order by prod.id desc limit $limit offset $offset");
+		}
+
+	    //$products = $DB->read("select * from products order by id desc limit $limit offset $offset");
+
+	    $categories = $DB->read("select * from categories where disabled = 0 order by views desc");
+	    $brands = $DB->read("select * from brands where disabled = 0 order by id desc");
 
 	    //show($categories);
 	    $product = $this->load_model('Product');
@@ -62,6 +173,7 @@ Class Admin extends Controller
 	    $tbl_rows = $product->make_table($products,$category);
 	    $data['tbl_rows'] = $tbl_rows;
 	    $data['categories'] = $categories;
+	    $data['brands'] = $brands;
 
 		$data['page_title'] = "Admin - Products";
 		$data['current_page'] = "products";
