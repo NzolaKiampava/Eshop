@@ -51,7 +51,7 @@ Class Category
 	public function get_all()
 	{
 		$DB = Database::newInstance();
-		return $DB->read("select * from categories order by views desc");
+		return $DB->read("select * from categories order by id desc");
 	}
 
 	public function get_one($id)
@@ -60,6 +60,16 @@ Class Category
 
 		$DB = Database::newInstance();
 		$data = $DB->read("select * from categories where id = '$id' limit 1");
+		return $data[0];
+	}
+
+//getting brands
+	public function get_one_brand($id)
+	{
+		$id = (int)$id;
+
+		$DB = Database::newInstance();
+		$data = $DB->read("select * from brands where id = '$id' limit 1");
 		return $data[0];
 	}
 
@@ -77,7 +87,6 @@ Class Category
 		}
 
 	}
-	
 
 
 	public function make_table($cats)
