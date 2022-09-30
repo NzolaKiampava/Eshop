@@ -43,9 +43,126 @@
 		<?php endif;?>
 	</div><!--/category-products-->
 
+	<h2>Advanced Search</h2>
+            <!-- Searchbox -->
+            <style>
+              .my-table {
+                background-color: #F0F0E9;
+              }
+
+              .my-table th{
+              	background-color: #ddd;
+              }
+            </style>
+            <form method="get">
+              <table class="my-table table table-condensed">
+                  <tr>
+                    <td><input value="<?=Search::get_sticky('textbox','description')?>" autofocus="true" type="text" name="description" class="form-control" placeholder="Type Product name"></td>
+
+                  </tr> 
+
+                  <tr>
+                    <td>
+                      <select class="form-control" name="category">
+                        <option>--Select Category--</option>
+                        <?=Search::get_categories('category')?>
+                      </select>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+	                	<div>Brands</div>
+	                  	<?=Search::get_brands()?>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                  		<div>Price Range:</div>
+                  		<div class="well text-center price-range" style="margin-top: 0px; margin-bottom: 0px;">
+							<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,800]" id="sl2" ><br />
+							<b class="pull-left">$ 0</b> <b class="pull-right">$ 1000</b>
+						</div>
+                      	<div class="form-inline">
+	                        <input value="<?=Search::get_sticky('number','min-price')?>" class="form-control min-price" type="hidden" size="12" min="0" step="0.01" name="min-price">
+	                        <input value="<?=Search::get_sticky('number','max-price')?>" class="form-control max-price" type="hidden" size="12" min="0" step="0.01" name="max-price">
+                      	</div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                    	<div>Quantity</div>
+                      	<div class="form-inline">
+	                       	<div class="well text-center quantity-range" style="margin-top: 0px; margin-bottom: 0px;">
+								<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[10,500]" id="sl2" ><br />
+								<b class="pull-left">$ 0</b> <b class="pull-right">$ 1000</b>
+							</div>
+	                        <input class="form-control" type="number" value="<?=Search::get_sticky('number','min-qty')?>" size="12" min="0" step="1" name="min-qty">
+	                        <input class="form-control" type="number" value="<?=Search::get_sticky('number','max-qty')?>" size="12" min="0" step="1" name="max-qty">
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <select class="form-control" name="year">
+                        <option>--Select Year--</option>
+                        <?=Search::get_years('year')?>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr><td><input type="submit" value="Search" class="btn btn-success pull-right" name="search"></td></tr>
+              </table>
+            </form>
+            <!-- endSearchbox -->
 	
 	<div class="shipping text-center"><!--shipping-->
 		<img src="<?= ASSETS . THEME ?>/images/home/shipping.jpg" alt="" />
 	</div><!--/shipping--><br><br><br>
 
 </div>
+
+<script>
+	
+	var price_range = document.querySelector(".price-range");
+	var qty_range = document.querySelector(".quantity-range");
+	
+	price_range.addEventListener('mousemove', change_price_range);
+	qty_range.addEventListener('mousemove', change_quantity_range);
+
+
+	function change_price_range(e)
+	{
+		var tooltip = e.currentTarget.querySelector(".tooltip-inner");
+		var min_price = document.querySelector(".min-price");
+		var max_price = document.querySelector(".max-price");
+
+		var values = tooltip.innerHTML;
+		var parts = values.split(":"); //divide in 2 parts or separate the values between
+
+		min_price.value = parts[0].trim();
+		max_price.value = parts[1].trim();
+	}
+
+	function change_quantity_range(e)
+	{
+		var tooltip = e.currentTarget.querySelector(".tooltip-inner");
+		var min_qty = document.querySelector(".min-qty");
+		var max_qty = document.querySelector(".max-qty");
+
+		var values = tooltip.innerHTML;
+		var parts = values.split(":"); //divide in 2 parts or separate the values between
+
+		min_qty.value = parts[0].trim();
+		max_qty.value = parts[1].trim();
+	}
+	
+
+	function exit_price_range()
+	{
+
+	}
+
+</script>
