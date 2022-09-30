@@ -69,92 +69,8 @@ Class Admin extends Controller
 
 		if ($search) {
 
-			$params = array();
-
-			//add description if is available
-			if(isset($_GET['description']) && trim($_GET['description'] != "")) {
-				$params['description'] = $_GET['description'];
-			}
-
-			//add category if is available
-			if(isset($_GET['category']) && trim($_GET['category'] != "--Select Category--")) {
-				$params['category'] = $_GET['category'];
-			}
-
-			//add year if is available
-			if(isset($_GET['year']) && trim($_GET['year'] != "--Select Year--")) {
-				$params['year'] = $_GET['year'];
-			}
-			
-			//add min-price if is available
-			if(isset($_GET['min-price']) && trim($_GET['max-price'] != "0") && trim($_GET['min-price'] != "") && trim($_GET['max-price'] != "")) {
-				$params['min-price'] = (float)$_GET['min-price'];
-				$params['max-price'] = (float)$_GET['max-price'];
-			}
-
-			//add max-qty if is available
-			if(isset($_GET['min-qty']) && trim($_GET['max-qty'] != "0") && trim($_GET['min-qty'] != "") && trim($_GET['max-qty'] != "")) {
-				$params['min-qty'] = (int)$_GET['min-qty'];
-				$params['max-qty'] = (int)$_GET['max-qty'];
-			}
-			
-			
-			//add description if is available
-			$brands = array();
-
-			foreach ($_GET as $key => $value) {
-
-				// if in key contains brands
-				if(strstr($key, "brand-")) {
-					$brands[] = $value;
-				}
-			} 
-
-
-			if(count($brands) > 0) {
-				$params['brands'] = implode("','", $brands);
-
-			}
-
-			$query = "
-				SELECT prod.*,cat.category as category_name,brands.brand as brand_name FROM products as prod join categories as cat on cat.id = prod.category join brands on brands.id = prod.brand ";
-
-				if(count($params) > 0){
-					$query .= " WHERE ";
-				}
-
-				if(isset($params['description'])) {
-					$query .= " prod.description like '%$params[description]%' AND ";
-				}
-
-				if(isset($params['category'])) {
-					$query .= " cat.id = '$params[category]' AND ";
-				}
-
-				
-				if(isset($params['brands'])) {
-					$query .= " brands.id in ('". $params['brands'] ."') AND ";  //implode was used to convert array to string and in between the string set','
-				}
-
-				if(isset($params['min-price'])) {
-					$query .= " (prod.price BETWEEN '".$params['min-price']."' AND '".$params['max-price']."') AND ";
-				}
-
-				if(isset($params['min-qty'])) {
-					$query .= " (prod.quantity BETWEEN '".$params['min-qty']."' AND '".$params['max-qty']."') AND ";
-				}
-
-				if(isset($params['year'])) {
-					$query .= " YEAR(prod.date) = '$params[year]' AND ";
-				}
-
-			$query = trim($query); //REMOVE SPACES
-			$query = trim($query,'AND');  //REMOVE AND CLAUSULE
-			$query .= "
-				order by prod.id desc limit $limit offset $offset
-			";
-
-			//show($query);
+			//Generate a search query
+			$query = Search::make_query($_GET);
 			$products = $DB->read($query);
 
 		} else {
@@ -273,6 +189,7 @@ Class Admin extends Controller
 
 			$data['action'] = "show";				
 			$Slider = $this->load_model('Slider');
+			$mode = "";
 			
 			//read all slider image
 			$data['rows'] = $Slider->get_all();
@@ -294,25 +211,43 @@ Class Admin extends Controller
 					die;
 				}
 
+			} 
+				if(isset($_GET['edit'])){
+					$mode = "edit";
 			}else
-			if(isset($_GET['action']) && $_GET['action'] == "edit"){
-				$data['action'] = "edit";
-				$data['id'] = null;
-				if(isset($_GET['id'])){
-					$data['id'] = $_GET['id'];
+				if(isset($_GET['delete'])){
+					$mode = "delete";
+			} else
+				if(isset($_GET['delete_confirmed'])){
+				$mode = "delete_confirmed";
+				$id = $_GET['delete_confirmed'];
+				$post_class->delete($id);
+			} else
+				if ($mode == "edit") {
+				$id = $_GET['edit'];
+				$slider = $Slider->get_one($id);
+				$data['POST'] = (array)$slider;
+				
+			}
+				/*if(isset($_GET['action']) && $_GET['action'] == "edit"){
+					$data['action'] = "edit";
+					$data['id'] = null;
+					if(isset($_GET['id'])){
+						$data['id'] = $_GET['id'];
+					}
+
+				}else
+				if(isset($_GET['action']) && $_GET['action'] == "delete"){
+
 				}
+				else
+				if(isset($_GET['action']) && $_GET['action'] == "delete_comfirmed"){
 
-			}else
-			if(isset($_GET['action']) && $_GET['action'] == "delete"){
-
-			}
-			else
-			if(isset($_GET['action']) && $_GET['action'] == "delete_comfirmed"){
-
-			}
+				}*/
 			
 		}
 
+		$data['mode'] = $mode;
 		$data['settings'] = $Settings->get_all_settings();
 		$data['type'] = $type;
 		$data['page_title'] = "Admin - $type";
