@@ -92,5 +92,97 @@ class Search
 				break;
 		}
 	}
+
+	public static function make_query($GET,$limit,$offset) 
+	{
+		$params = array();
+
+		//add description if is available
+		if(isset($GET['description']) && trim($GET['description'] != "")) {
+			$params['description'] = $GET['description'];
+		}
+
+		//add category if is available
+		if(isset($GET['category']) && trim($GET['category'] != "--Select Category--")) {
+			$params['category'] = $GET['category'];
+		}
+
+		//add year if is available
+		if(isset($GET['year']) && trim($GET['year'] != "--Select Year--")) {
+			$params['year'] = $GET['year'];
+		}
+		
+		//add min-price if is available
+		if(isset($GET['min-price']) && trim($GET['max-price'] != "0") && trim($GET['min-price'] != "") && trim($GET['max-price'] != "")) {
+			$params['min-price'] = (float)$GET['min-price'];
+			$params['max-price'] = (float)$GET['max-price'];
+		}
+
+		//add max-qty if is available
+		if(isset($GET['min-qty']) && trim($GET['max-qty'] != "0") && trim($GET['min-qty'] != "") && trim($GET['max-qty'] != "")) {
+			$params['min-qty'] = (int)$GET['min-qty'];
+			$params['max-qty'] = (int)$GET['max-qty'];
+		}
+		
+		
+		//add description if is available
+		$brands = array();
+
+		foreach ($GET as $key => $value) {
+
+			// if in key contains brands
+			if(strstr($key, "brand-")) {
+				$brands[] = $value;
+			}
+		} 
+
+
+		if(count($brands) > 0) {
+			$params['brands'] = implode("','", $brands);
+
+		}
+
+		$query = "
+			SELECT prod.*,cat.category as category_name,brands.brand as brand_name FROM products as prod join categories as cat on cat.id = prod.category join brands on brands.id = prod.brand ";
+
+			if(count($params) > 0){
+				$query .= " WHERE ";
+			}
+
+			if(isset($params['description'])) {
+				$query .= " prod.description like '%$params[description]%' AND ";
+			}
+
+			if(isset($params['category'])) {
+				$query .= " cat.id = '$params[category]' AND ";
+			}
+
+			
+			if(isset($params['brands'])) {
+				$query .= " brands.id in ('". $params['brands'] ."') AND ";  //implode was used to convert array to string and in between the string set','
+			}
+
+			if(isset($params['min-price'])) {
+				$query .= " (prod.price BETWEEN '".$params['min-price']."' AND '".$params['max-price']."') AND ";
+			}
+
+			if(isset($params['min-qty'])) {
+				$query .= " (prod.quantity BETWEEN '".$params['min-qty']."' AND '".$params['max-qty']."') AND ";
+			}
+
+			if(isset($params['year'])) {
+				$query .= " YEAR(prod.date) = '$params[year]' AND ";
+			}
+
+		$query = trim($query); //REMOVE SPACES
+		$query = trim($query,'AND');  //REMOVE AND CLAUSULE
+		$query .= "
+			order by prod.id desc limit $limit offset $offset
+		";
+
+		//show($query);
+		return $query;
+
+	}
 	
 }
