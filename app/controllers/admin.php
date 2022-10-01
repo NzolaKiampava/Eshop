@@ -70,7 +70,7 @@ Class Admin extends Controller
 		if ($search) {
 
 			//Generate a search query
-			$query = Search::make_query($_GET);
+			$query = Search::make_query($_GET,$limit,$offset);
 			$products = $DB->read($query);
 
 		} else {
