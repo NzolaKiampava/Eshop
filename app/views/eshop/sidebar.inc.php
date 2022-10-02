@@ -81,13 +81,13 @@
                     <td>
                   		<div>Price Range:</div>
                   		<div class="well text-center price-range" style="margin-top: 0px; margin-bottom: 0px;">
-							<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,800]" id="sl2" ><br />
-							<b class="pull-left">$ 0</b> <b class="pull-right">$ 1000</b>
-						</div>
-                      	<div class="form-inline">
-	                        <input value="<?=Search::get_sticky('number','min-price')?>" class="form-control min-price" type="hidden" size="12" min="0" step="0.01" name="min-price">
-	                        <input value="<?=Search::get_sticky('number','max-price')?>" class="form-control max-price" type="hidden" size="12" min="0" step="0.01" name="max-price">
-                      	</div>
+												<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,800]" id="sl2" ><br />
+												<b class="pull-left">$ 0</b> <b class="pull-right">$ 1000</b>
+                      	
+                        <input value="<?=Search::get_sticky('number','min-price')?>" class="form-control min-value" type="hidden" size="12" min="0" step="0.01" name="min-price">
+                        <input value="<?=Search::get_sticky('number','max-price')?>" class="form-control max-value" type="hidden" size="12" min="0" step="0.01" name="max-price">
+
+											</div>
                     </td>
                   </tr>
 
@@ -96,11 +96,12 @@
                     	<div>Quantity</div>
                       	<div class="form-inline">
 	                       	<div class="well text-center quantity-range" style="margin-top: 0px; margin-bottom: 0px;">
-								<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[10,500]" id="sl2" ><br />
-								<b class="pull-left">$ 0</b> <b class="pull-right">$ 1000</b>
-							</div>
-	                        <input class="form-control" type="number" value="<?=Search::get_sticky('number','min-qty')?>" size="12" min="0" step="1" name="min-qty">
-	                        <input class="form-control" type="number" value="<?=Search::get_sticky('number','max-qty')?>" size="12" min="0" step="1" name="max-qty">
+														<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,800]" id="sl3" ><br />
+														<b class="pull-left">0</b> <b class="pull-right">1000</b>
+														<input class="form-control min-value" type="hidden" value="<?=Search::get_sticky('number','min-qty')?>" size="12" min="0" step="1" name="min-qty">
+	                        	<input class="form-control max-value" type="hidden" value="<?=Search::get_sticky('number','max-qty')?>" size="12" min="0" step="1" name="max-qty">
+													</div>
+	                        
                       </div>
                     </td>
                   </tr>
@@ -129,40 +130,22 @@
 	var price_range = document.querySelector(".price-range");
 	var qty_range = document.querySelector(".quantity-range");
 	
-	price_range.addEventListener('mousemove', change_price_range);
-	qty_range.addEventListener('mousemove', change_quantity_range);
+	price_range.addEventListener('mousemove', change_value_range);
+	qty_range.addEventListener('mousemove', change_value_range);
 
 
-	function change_price_range(e)
+	function change_value_range(e)
 	{
 		var tooltip = e.currentTarget.querySelector(".tooltip-inner");
-		var min_price = document.querySelector(".min-price");
-		var max_price = document.querySelector(".max-price");
+		var min_value = e.currentTarget.querySelector(".min-value");
+		var max_value = e.currentTarget.querySelector(".max-value");
 
 		var values = tooltip.innerHTML;
 		var parts = values.split(":"); //divide in 2 parts or separate the values between
 
-		min_price.value = parts[0].trim();
-		max_price.value = parts[1].trim();
+		min_value.value = parts[0].trim();
+		max_value.value = parts[1].trim();
 	}
 
-	function change_quantity_range(e)
-	{
-		var tooltip = e.currentTarget.querySelector(".tooltip-inner");
-		var min_qty = document.querySelector(".min-qty");
-		var max_qty = document.querySelector(".max-qty");
-
-		var values = tooltip.innerHTML;
-		var parts = values.split(":"); //divide in 2 parts or separate the values between
-
-		min_qty.value = parts[0].trim();
-		max_qty.value = parts[1].trim();
-	}
-	
-
-	function exit_price_range()
-	{
-
-	}
 
 </script>
