@@ -116,6 +116,65 @@ Class User
 		$_SESSION['error'] = $this->error;
 	}
 
+	public function add_user($POST)
+	{
+		show($POST);
+		
+		$data = array();
+		$db = Database::getInstance();
+
+		$data['name']      = trim($POST['name']);		
+		$data['email']     = trim($POST['email']);	
+		$data['rank']      = trim($POST['rank']);	
+		$data['password']  = "kiampava";	
+
+		if($data['rank'] == "admin"){
+			$type = "admins";
+		}else{
+			$type = "customers";
+		}	
+
+		//check if email already exits
+		
+		$sql = "SELECT * FROM users WHERE email = :email limit 1";
+		$arr['email'] = $data['email'];
+		$check = $db->read($sql,$arr);
+		if(is_array($check)){
+			return false;
+		}
+		
+
+		$data['url_address'] = $this->get_random_string_max(30);
+		
+		//check for url_address
+		$arr = false;
+
+		$sql = "SELECT * FROM users WHERE url_address = :url_address limit 1";
+		$arr['url_address'] = $data['url_address'];
+		$check = $db->read($sql,$arr);
+		if(is_array($check)){
+			$data['url_address'] = $this->get_random_string_max(30);
+		}
+
+		//save
+		
+		$data['date'] = date("Y-m-d H:i:s");
+		$data['password'] = hash('sha1', $data['password']);
+
+		$query = "INSERT INTO users (url_address,name,email,password,date,rank) values (:url_address,:name,:email,:password,:date,:rank)";
+
+		$result = $db->write($query,$data);
+
+		if($result)
+		{
+
+			header("Location: " . ROOT . "admin/users/$type");
+			die;
+		}
+		
+		return false;
+	}
+
 	public function get_user($url)
 	{
 		$db = Database::newInstance();
