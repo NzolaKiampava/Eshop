@@ -12,6 +12,14 @@ Class Admin extends Controller
 			$data['user_data'] = $user_data;
 		}
 
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
 		$data['page_title'] = "Admin";
 		$data['current_page'] = "dashboard";
 		$this->view("admin/index", $data);
@@ -26,7 +34,14 @@ Class Admin extends Controller
 			$data['user_data'] = $user_data;
 		}
 
-	    $DB = Database::newInstance();
+	    //count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
 	    //paginatin formula
 		$limit = 10;
 		$offset = Page::get_offset($limit);
@@ -62,7 +77,14 @@ Class Admin extends Controller
 			$data['user_data'] = $user_data;
 		}
 
-	    $DB = Database::newInstance();
+	    //count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
 	    //paginatin formula
 		$limit = 10;
 		$offset = Page::get_offset($limit);
@@ -102,9 +124,43 @@ Class Admin extends Controller
 		$Order = $this->load_model('Order');
 		$user_data = $User->check_login(true, ["admin"]);
 
-		$orders = $Order->get_all_oders();
+		//$orders = $Order->get_all_oders();
+
+		$mode = "read";
+
+		if(isset($_GET['delete']))
+		{
+			$mode = "delete";
+		} 
+
+		if(isset($_GET['delete_confirmed']))
+		{
+			$mode = "delete_confirmed";
+			$id = $_GET['delete_confirmed'];
+			$Order->delete($id);
+			$Order->delete_order_details($id);
+		}
+		
+		if ($mode == "delete") {
+			$id = $_GET['delete'];
+			$orders = $Order->get_one($id);
+			
+		}else{
+			$mode = "read";
+			$orders = $Order->get_all_oders();
+			//show($orders);
+		}
+
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
 
 		if (is_array($orders)) {
+			//show($orders);
 			foreach ($orders as $key => $row) {
 				// code...
 				$details = $Order->get_order_details($row->id);
@@ -126,6 +182,19 @@ Class Admin extends Controller
 		if(is_object($user_data)){
 			$data['user_data'] = $user_data;
 		}
+
+
+		if(count($_POST))
+		{
+			$ids = array();
+			$ids = $_POST;
+			$ids = implode("','", $ids);
+			//show($ids);
+			$Order->delete_array($ids);
+		}
+
+		$data['mode'] = $mode;
+
 		$data['page_title'] = "Admin - Orders";
 		$data['orders'] = $orders;
 		$data['current_page'] = "orders";
@@ -139,15 +208,36 @@ Class Admin extends Controller
 
 		$user_data = $User->check_login(true, ["admin"]);
 
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
 		if(is_object($user_data)){
 			$data['user_data'] = $user_data;
 		}
 		if($type == "admins")
 		{
 			$users = $User->get_admins();
+			if(count($_POST) > 0)
+			{
+				$User->add_user($_POST);
+				//header("Location: " . ROOT . "admin/users/admins");
+				//die;
+			}
 		}else{
 			$users = $User->get_customers();
+			
+			if(count($_POST) > 0)
+			{
+				$User->add_user($_POST);
+			}
 		}
+
+
 
 		if(is_array($users)){
 			foreach ($users as $key => $row) {
@@ -158,10 +248,46 @@ Class Admin extends Controller
 		}
 
 		$data['users'] = $users;
+		$data['type'] = $type;
 		$data['page_title'] = "Admin - $type";
 		$data['current_page'] = "users";
 		$this->view("admin/users", $data);
 
+	}
+
+	public function admin_profile()
+	{
+		$User = $this->load_model('User');
+		$user_data = $User->check_login(true, ["admin"]);
+		$data['errors'] = "";
+		if(is_object($user_data)){
+			$data['user_data'] = $user_data;
+		}
+
+		$id = $data['user_data']->id;
+
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
+		if(count($_POST) > 0)
+		{
+			//show($_POST);
+			$data['errors'] = $User->update_admin_profile($_POST, $id);
+
+			if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
+				//show($_SESSION['error']);
+				$data['errors'] = $_SESSION['error'];
+				$data['POST'] = $_POST;
+			}
+			
+		}
+		$data['page_title'] = "Admin - Profile";
+		$this->view("admin/admin_profile", $data);
 	}
 
 	public function settings($type = '')
@@ -174,12 +300,21 @@ Class Admin extends Controller
 			$data['user_data'] = $user_data;
 		}
 
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
+
 		//select the right page
 		if($type == 'socials'){
 
 			if(count($_POST) > 0)
 			{
-				$error = $Settings->save_settings($_POST);
+				$data['errors'] = $Settings->save_settings($_POST);
+				
 				header("Location: " . ROOT . "admin/settings/socials");
 				die;
 			}
@@ -187,67 +322,59 @@ Class Admin extends Controller
 		}else
 		if($type == "slider_images"){
 
+			$image_class = $this->load_model('Image');
 			$data['action'] = "show";				
 			$Slider = $this->load_model('Slider');
-			$mode = "";
 			
 			//read all slider image
 			$data['rows'] = $Slider->get_all();
 
 			if(isset($_GET['action']) && $_GET['action'] == "add"){
 				$data['action'] = "add";
-
-				//if new row was posted
-
-				if(count($_POST) > 0)
-				{
-					//show($_POST);
-					//show($_FILES);
-					$Image = $this->load_model('Image');
-					$data['errors'] = $Slider->create($_POST, $_FILES, $Image);
-					//show($data['errors']);
-					$data['POST'] = $_POST;
-					header("Location: " . ROOT . "admin/settings/slider_images");
-					die;
-				}
-
 			} 
-				if(isset($_GET['edit'])){
-					$mode = "edit";
-			}else
-				if(isset($_GET['delete'])){
-					$mode = "delete";
-			} else
-				if(isset($_GET['delete_confirmed'])){
-				$mode = "delete_confirmed";
-				$id = $_GET['delete_confirmed'];
-				$post_class->delete($id);
-			} else
-				if ($mode == "edit") {
+
+			elseif(isset($_GET['edit'])){
+				//$mode = "edit";
 				$id = $_GET['edit'];
+				//show($id);
+				$data['action'] = "edit";
 				$slider = $Slider->get_one($id);
 				$data['POST'] = (array)$slider;
-				
+
 			}
-				/*if(isset($_GET['action']) && $_GET['action'] == "edit"){
-					$data['action'] = "edit";
-					$data['id'] = null;
-					if(isset($_GET['id'])){
-						$data['id'] = $_GET['id'];
-					}
 
-				}else
-				if(isset($_GET['action']) && $_GET['action'] == "delete"){
+			elseif(isset($_GET['delete'])){
+				$id = $_GET['delete'];
+				$data['action'] = "delete";
+				$data['slider'] = $Slider->get_one($id);
+			}
 
+			elseif(isset($_GET['delete_confirmed']))
+			{
+				$data['action'] = "delete_confirmed";
+				$id = $_GET['delete_confirmed'];
+				$Slider->delete($id);
+			}
+
+			if(count($_POST) > 0)
+			{
+				if ($data['action'] == "add") {
+					$Slider->create($_POST, $_FILES, $image_class);
 				}
-				else
-				if(isset($_GET['action']) && $_GET['action'] == "delete_comfirmed"){
-
-				}*/
+				elseif($data['action'] == "edit") {
+					$Slider->edit($_POST, $_FILES, $image_class);
+				}
+				if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
+					$data['errors'] = $_SESSION['error'];
+					$data['POST'] = $_POST;
+				}else{
+					redirect("admin/settings/slider_images");
+				}
+			}
 			
 		}
 
-		$data['mode'] = $mode;
+		
 		$data['settings'] = $Settings->get_all_settings();
 		$data['type'] = $type;
 		$data['page_title'] = "Admin - $type";
@@ -264,6 +391,14 @@ Class Admin extends Controller
 		$Message = $this->load_model('Message');
 
 		$user_data = $User->check_login(true, ["admin"]);
+
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
 
 		if(is_object($user_data)){
 			$data['user_data'] = $user_data;
@@ -307,6 +442,14 @@ Class Admin extends Controller
 		$image_class = $this->load_model('Image');
 
 		$user_data = $User->check_login(true, ["admin"]);
+
+		//count_down
+			$DB = Database::newInstance();
+			$data['count_products'] = $DB->read("select * from products");
+			$data['count_category'] = $DB->read("select * from categories");
+			$data['count_brand'] = $DB->read("select * from brands");
+			$data['count_order'] = $DB->read("select * from orders");
+			$data['count_message'] = $DB->read("select * from contact_us");
 
 		if(is_object($user_data)){
 			$data['user_data'] = $user_data;
