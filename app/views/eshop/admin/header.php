@@ -13,10 +13,14 @@
     <link href="<?=ASSETS . THEME ?>admin/css/bootstrap.css" rel="stylesheet">
     <!--external css-->
     <link href="<?=ASSETS . THEME ?>admin/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="<?= ASSETS . THEME ?>admin/css/zabuto_calendar.css">
+    <link rel="stylesheet" type="text/css" href="<?= ASSETS . THEME ?>admin/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="<?= ASSETS . THEME ?>admin/lineicons/style.css">
         
     <!-- Custom styles for this template -->
     <link href="<?=ASSETS . THEME ?>admin/css/style.css" rel="stylesheet">
     <link href="<?=ASSETS . THEME ?>admin/css/style-responsive.css" rel="stylesheet">
+    <script src="<?= ASSETS . THEME ?>admin/js/chart-master/Chart.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -54,53 +58,53 @@
                                 <p class="green">You have 4 pending tasks</p>
                             </li>
                             <li>
-                                <a href="<?=ROOT?>index#">
+                                <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">DashGum Admin Panel</div>
-                                        <div class="percent">40%</div>
+                                        <div class="desc">Total Products</div>
+                                        <div class="percent"><?=count($count_products)?>%</div>
                                     </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?=count($count_products)?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=count($count_products)?>%">
+                                            <span class="sr-only"><?=count($count_products)?>% Complete (success)</span>
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=ROOT?>index#">
+                                <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Database Update</div>
-                                        <div class="percent">60%</div>
+                                        <div class="desc">Total Categories</div>
+                                        <div class="percent"><?=count($count_category)?>%</div>
                                     </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=count($count_category)?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=count($count_category)?>%">
+                                            <span class="sr-only"><?=count($count_category)?>% Complete (warning)</span>
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=ROOT?>index#">
+                                <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Product Development</div>
-                                        <div class="percent">80%</div>
+                                        <div class="desc">Total Brands</div>
+                                        <div class="percent"><?=count($count_brand)?>%</div>
                                     </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            <span class="sr-only">80% Complete</span>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?=count($count_brand)?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=count($count_brand)?>%">
+                                            <span class="sr-only"><?=count($count_brand)?>% Complete</span>
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=ROOT?>index#">
+                                <a href="#">
                                     <div class="task-info">
-                                        <div class="desc">Payments Sent</div>
-                                        <div class="percent">70%</div>
+                                        <div class="desc">Total Orders</div>
+                                        <div class="percent"><?=count($count_order)?>%</div>
                                     </div>
-                                    <div class="progress progress-striped">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                            <span class="sr-only">70% Complete (Important)</span>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?=count($count_order)?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=count($count_order)?>%">
+                                            <span class="sr-only"><?=count($count_order)?>% Complete (Important)</span>
                                         </div>
                                     </div>
                                 </a>
