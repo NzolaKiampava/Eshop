@@ -12,7 +12,7 @@ MAIN SIDEBAR MENU
               <h5 class="centered" style="font-size:11px;"><?=$data['user_data']->email;?></h5>
 
             <li class="sub-menu">
-                <a href="javascript:;" >
+                <a <?=(isset($current_page) && $current_page == 'dashboard') ? ' class="active" ' : ''?> href="<?=ROOT?>admin" >
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
@@ -36,6 +36,22 @@ MAIN SIDEBAR MENU
                 <a <?=(isset($current_page) && $current_page == 'orders') ? ' class="active" ' : ''?> href="<?=ROOT?>admin/orders" >
                     <i class="fa fa-reorder"></i>
                     <span>Orders</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='badge'><?=count($count_order)?></span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a <?=(isset($current_page) && $current_page == 'messages') ? ' class="active" ' : ''?> href="<?=ROOT?>admin/messages" >
+                    <i class="fa fa-comment"></i>
+                    <span>Messages</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='badge bg-info'><?=count($count_message)?></span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a <?=(isset($current_page) && $current_page == 'blogs') ? ' class="active" ' : ''?> href="<?=ROOT?>admin/blogs" >
+                    <i class="fa fa-bullhorn"></i>
+                    <span>Blog Posts</span>
                 </a>
             </li>
 
@@ -63,6 +79,13 @@ MAIN SIDEBAR MENU
                     <li><a  href="<?=ROOT?>admin/users/customers">Customers</a></li>
                     <li><a  href="<?=ROOT?>admin/users/admins">Admins</a></li>
                 </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="<?=ROOT?>admin/admin_profile" >
+                    <i class="fa fa-desktop"></i>
+                    <span>Profile</span>
+                </a>
             </li>
 
             <li class="sub-menu">
