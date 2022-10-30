@@ -25,7 +25,8 @@
 
 			
 		<div class="content-panel table-responsive">
-			<?php if (is_array($orders)): ?>
+			<?php if (isset($POST_DATA) && is_array($orders)): ?>
+			<?=show($orders)?>
 				<?php foreach ($orders as $order): ?>
 					<?php $order = (object)$order; 
 							$order->id = 0;
@@ -88,6 +89,8 @@
 							<h3 class="pull-right">Grand Total: $<?=$sub_total?></h3>
 							</div>
 				<?php endforeach; ?>
+			<?php else: ?>
+				<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><center><strong>Please add some items in the car and make checkout</strong></center></div>
 			<?php endif; ?>
 		</div>
 		<hr style="clear: both;">
