@@ -134,10 +134,14 @@ class Order extends Controller
 
 	public function get_all_oders()
 	{
+		//paginatin formula
+		$limit = 10;
+		$offset = Page::get_offset($limit);
+
 		$orders = false;
 		$db = Database::newInstance();
 
-		$query = "select * from orders order by id desc limit 100";
+		$query = "select * from orders order by id desc limit $limit offset $offset";
 		$orders = $db->read($query);
 
 		return $orders;
@@ -156,7 +160,35 @@ class Order extends Controller
 		return $details;
 	}
 
-	
+	public function get_one($id)
+	{
+		$id = (int)$id;
 
+		$DB = Database::newInstance();
+		$orders = $DB->read("select * from orders where id = '$id' limit 1");
+		return $orders;
+	}
 	
+	public function delete($id)
+	{
+		$DB = Database::newInstance();
+		$id = (int)$id;
+		$query = "delete from orders where id = '$id' limit 1";
+		$DB->write($query);
+	}
+
+	public function delete_order_details($orderid)
+	{
+		$DB = Database::newInstance();
+		$id = (int)$id;
+		$query = "delete from order_details where orderid = '$orderid' limit 1";
+		$DB->write($query);
+	}	
+
+	public function delete_array($ids)
+	{
+		$DB = Database::newInstance();
+		$query = "DELETE from orders where id in ('". $ids ."')";
+		$DB->write($query);
+	}
 }
