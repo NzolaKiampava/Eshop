@@ -175,6 +175,71 @@ Class User
 		return false;
 	}
 
+	public function update_admin_profile($POST, $id)
+	{
+
+		$data = array();
+		$db = Database::getInstance();
+
+		$data['name']      = trim($POST['name']);		
+		$data['email']     = trim($POST['email']);		
+		$data['password']  = trim($POST['new_password']);
+		$data['rank']      = trim($POST['rank']);;	
+		$data['id']	       = (int)$id;
+		$current_password  = trim($POST['current_password']);
+
+		if(empty($data['email']) || !preg_match("/^[a-zA-Z_-]+@[a-zA-Z]+.[a-zA-Z]+$/", $data['email']))
+		{
+			$this->error .= "Please enter a valid email <br>";
+		}
+
+		if(empty($data['name']) || !preg_match("/^[a-zA-Z ]+$/", $data['name']))
+		{
+			$this->error .= "Please enter a valid name <br>";
+		}	
+
+
+		if(strlen($data['password']) < 4)
+		{
+			$this->error .= "Password must be at least 4 characters long <br>";
+		}
+
+		//check the current password
+		$sql = "SELECT * FROM users WHERE id = :id limit 1";
+		$arr['id'] = (int)$id;
+		$check = $db->read($sql,$arr);
+		if(is_array($check)){
+			
+			$current_password = hash('sha1', $current_password);
+
+			if($current_password == $check[0]->password)
+			{
+				if($this->error == ""){
+
+					
+					//save
+					$data['password'] = hash('sha1', $data['password']);
+
+					$query = "UPDATE users SET name = :name ,email = :email,password = :password, rank = :rank where id = :id";
+
+					$result = $db->write($query,$data);
+
+					if($result)
+					{
+						header("Location: " . ROOT . "admin/admin_profile");
+						die;
+					}
+				}
+			}
+			else
+			{
+				$this->error = "The current password is wrong <br/>";
+			}
+		}
+
+		$_SESSION['error'] = $this->error;
+	}
+
 	public function get_user($url)
 	{
 		$db = Database::newInstance();
