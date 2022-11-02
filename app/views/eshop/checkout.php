@@ -171,8 +171,13 @@
 			</div>
 
 			<?php else:?>
-				<div class="register-req">
-					<h3 style="text-align: center;">Please add some item in the cart first!</h3>
+
+				<div style="margin-top: -30rem;">
+					<center><img width="500" src="<?=ASSETS . THEME?>select-message.png"></center>
+					<h3 style="text-align: center; margin-top:-10rem;"><div class="alert alert-warning alert-dismissable">
+						  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						  <strong>Warning!</strong> Please add some items in the cart first!
+						</div></h3>
 				</div>
 				<a href="<?=ROOT?>cart">
 						<input type="button" class="btn btn-warning pull-left" value="< Back to cart" name="">
