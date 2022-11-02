@@ -25,8 +25,8 @@
 
 			
 		<div class="content-panel table-responsive">
-			<?php if (isset($POST_DATA) && is_array($orders)): ?>
-			<?=show($orders)?>
+			<?php if (isset($_SESSION['CART']) && is_array($orders)): ?>
+			
 				<?php foreach ($orders as $order): ?>
 					<?php $order = (object)$order; 
 							$order->id = 0;
@@ -98,8 +98,10 @@
 		<a href="<?=ROOT?>checkout">
 				<input type="button" class="btn btn-warning pull-left" value="< Back to Checkout" name="">
 		</a>
-		<form method="POST">	
+		<form method="POST">
+		<?php if(isset($_SESSION['CART'])): ?>	
 			<input type="submit" class="btn btn-warning pull-right" value="Pay >" name="">
+		<?php endif;?>
 		</form>
 			
 	</div>
