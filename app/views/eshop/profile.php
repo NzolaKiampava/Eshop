@@ -26,6 +26,7 @@
 		}
 	</style>
 
+
 	<!-- Profile data -->
 <?php if(is_object($profile_data)): ?>
 <div style="display: flex;">
@@ -35,7 +36,7 @@
 			<div class="white-header" style="color:grey;">
 				<h5>MY ACCOUNT</h5>
 			</div>
-			<p><img src="<?= ASSETS . THEME ?>admin/img/ui-zac.jpg" class="img-circle" width="80"></p>
+			<p><img src="<?= ($profile_data->image != "") ? ROOT.$profile_data->image : ROOT.'uploads/user.png'?>" class="img-circle" width="80"></p>
 			<p><b><?=$profile_data->name?></b></p>
 			<div class="row">
 				<div class="col-md-6">
