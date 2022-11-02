@@ -109,9 +109,13 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<?php if(isset($data['user_data'])):?>
-									<li><a href="<?=ROOT?>profile"><i class="fa fa-user"></i> Account</a></li>
+									<li><a href="<?=ROOT?>profile"><img src="<?= ($data['user_data']->image != "") ? ROOT.$data['user_data']->image : ROOT.'uploads/user.png'?>" class="img-circle" width="24"> Account</a></li>
 								<?php endif; ?>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								<?php if(isset($data['user_data']) && $data['user_data']->rank == "admin"):?>
+									<li><a href="<?=ROOT?>admin"><img style="width: 2.5rem;" src="<?= ASSETS . THEME ?>vip.png" alt="" />Admin</a></li>
+								<?php endif;?>
+								
+								<!--<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>-->
 								<li><a href="<?=ROOT?>checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="<?=ROOT?>cart"><i class="fa fa-shopping-cart"></i>
 									<?php if (isset($_SESSION['CART'])): ?>
@@ -147,8 +151,7 @@
 								<li class="dropdown"><a href="" class="<?= $page_title == "Shop" ? "active" : ""?>">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="<?=ROOT?>shop">Products</a></li>
-										<li><a href="<?=ROOT?>product-details">Product Details</a></li> 
-										<li><a href="<?=ROOT?>checkout">Checkout</a></li> 
+						     				<li><a href="<?=ROOT?>checkout">Checkout</a></li> 
 										<li><a href="<?=ROOT?>cart">Cart</a></li> 
 										<?php if(isset($data['user_data'])): ?>
 											<li><a href="<?=ROOT?>logout"><i class="fa fa-lock"></i> Logout</a></li>
@@ -158,7 +161,7 @@
                                     </ul>
                                 </li> 
 								<li class="dropdown"><a href="<?=ROOT?>blog" class="<?= $page_title == "Blog" ? "active" : ""?>">Blog</a></li> 
-								<li><a href="<?=ROOT?>contact-us" class="<?= $page_title == "Contact" ? "active" : ""?>">Contact</a></li>
+								<li><a href="<?=ROOT?>contact-us" class="<?= $page_title == "Contact-Us" ? "active" : ""?>">Contact</a></li>
 							</ul>
 						</div>
 					</div>
