@@ -19,10 +19,13 @@
 			</thead>
 			<tbody onclick="show_detail(event)">
 			<?php if (is_array($users)): ?>
-				<?php foreach ($users as $user): ?>
+				<?php foreach ($users as $user):?>
+
+
 					<tr>
 						<td><?=$user->id?></td>
-						<td><a href="<?=ROOT?>profile/<?=$user->url_address?>"><?=$user->name?></a></td>
+					
+						<td><a href="<?=ROOT?>profile/<?=$user->url_address?>"><img class="img-circle" src="<?= ($user->image != "") ? ROOT.$user->image : ROOT.'uploads/user.png'?>" width="35px" height="35px" align="">  <?=$user->name?></a></td>
 						<td><?=$user->email?></td>
 						<td><?=date("jS M Y H:i a", strtotime($user->date))?></td>
 						<td><?=$user->orders_count?></td>
