@@ -1,0 +1,7 @@
+clientID: AWjt6DhhaShP-9b8sH9BaydTcr2WEMbJFmAqol3uJ2EdfLklUTia4VFRDw22ouU2cXw__Q3EGgjxonmn
+
+
+db_password: B9lOl-5d>WUpyB\M
+db_name: id19515336_eshop_db
+db_username: id19515336_root
+db_host: localhost
