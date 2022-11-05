@@ -4,11 +4,23 @@
 define("WEBSITE_TITLE", "E-Shopper");
 
 //DATABASE CONFIG
-define("DB_NAME", "eshop_db");			//DATABASE NAME
-define("DB_USER", "root");				//DATABASE USER
-define("DB_PASS", "");                  //DATABASE PASSWORD
-define("DB_TYPE", "mysql");             //DATABASE TYPE
-define("DB_HOST", "localhost");         //DATABASE HOST
+
+if($_SERVER['SERVER_NAME'] == "localhost")
+{
+	define("DB_NAME", "eshop_db");			//DATABASE NAME
+	define("DB_USER", "root");				//DATABASE USER
+	define("DB_PASS", "");                  //DATABASE PASSWORD
+	define("DB_TYPE", "mysql");             //DATABASE TYPE
+	define("DB_HOST", "localhost");         //DATABASE HOST
+} else           // living server
+{
+	define("DB_NAME", "id19515336_eshop_db");			//DATABASE NAME
+	define("DB_USER", "id19515336_root");				//DATABASE USER
+	define("DB_PASS", "B9lOl-5d>WUpyB\M");              //DATABASE PASSWORD
+	define("DB_TYPE", "mysql");             			//DATABASE TYPE
+	define("DB_HOST", "localhost");         			//DATABASE HOST
+}
+
 
 //Theme of eshop folder
 define("THEME", "eshop/");
