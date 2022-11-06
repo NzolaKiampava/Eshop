@@ -1,2 +1,2 @@
 # Eshop
-Eshop is a e-commerce platform
+Eshop is a e-commerce platform with PayPal as payment method
