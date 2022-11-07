@@ -139,7 +139,7 @@
 							<td><?=$orders[0]->delivery_address?></td>
 							<td><?=$orders[0]->state?></td>
 							<td><?=$orders[0]->mobile_phone?></td>
-							<td><a href="<?=ROOT?>admin/orders?delete_confirmed=<?=$orders[0]->id?>"><button class="btn btn-danger" title="delete"><i class="fa fa-trash-o"></button></i></a></td>
+							<!--<td><a href="<?=ROOT?>admin/orders?delete_confirmed=<?=$orders[0]->id?>"><button class="btn btn-danger" title="delete"><i class="fa fa-trash-o"></button></i></a></td>-->
 						</tr>
 					</tbody>
 				<?php endif;?>
