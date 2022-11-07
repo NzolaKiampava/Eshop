@@ -10,7 +10,7 @@
 		<table class="table table-striped table-advance table-hover">
 			<thead>
 				<tr>
-					<th>user id</th>
+					<th>user ID</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Date Created</th>
@@ -20,15 +20,14 @@
 			<tbody onclick="show_detail(event)">
 			<?php if (is_array($users)): ?>
 				<?php foreach ($users as $user):?>
-
-
 					<tr>
 						<td><?=$user->id?></td>
 					
-						<td><a href="<?=ROOT?>profile/<?=$user->url_address?>"><img class="img-circle" src="<?= ($user->image != "") ? ROOT.$user->image : ROOT.'uploads/user.png'?>" width="35px" height="35px" align="">  <?=$user->name?></a></td>
+						<td><a href="<?=ROOT?>profile/<?=$user->url_address?>"><img class="img-circle" src="<?= ($user->image != "") ? ROOT.$user->image : ROOT.'uploads/user.png'?>" width="35px" height="35px" align=""> <?=$user->name?></a></td>
 						<td><?=$user->email?></td>
 						<td><?=date("jS M Y H:i a", strtotime($user->date))?></td>
 						<td><?=$user->orders_count?></td>
+						<td><a href="<?=ROOT?>admin/users/<?=$type?>?delete=<?=$user->id?>"><button class="btn btn-danger" title="delete"><i class="fa fa-trash-o"></button></i></a></td>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
