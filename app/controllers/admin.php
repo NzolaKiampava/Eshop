@@ -46,8 +46,8 @@ Class Admin extends Controller
 		$limit = 10;
 		$offset = Page::get_offset($limit);
 
-	    $categories_all = $DB->read("select * from categories order by id desc limit $limit offset $offset");
-	    $categories = $DB->read("select * from categories where disabled = 0 order by id desc");
+	    $categories_all = $DB->read("select * from categories order by views desc limit $limit offset $offset");
+	    $categories = $DB->read("select * from categories where disabled = 0 order by views desc");
 	    
 
 	    $category = $this->load_model('Category');
