@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02-Nov-2022 às 21:05
+-- Tempo de geração: 07-Nov-2022 às 02:42
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 7.4.25
 
@@ -45,7 +45,8 @@ INSERT INTO `blogs` (`id`, `url_address`, `title`, `post`, `image`, `date`, `use
 (7, 'ecommmerce-websites-of-the-world', 'Ecommerce Websites Of The World', 'ecommmerce websites of the worldh, jsgdsjkgdsgd, hkahakdhka , hkahdakheub, haiadhi.hoafo', 'uploads/rUv6l4xHryAdWfVnQA1yidx1tEAM6TiRtEXVR7YiocxlLJC0ndWikUgxyKIe.jpg', '2022-08-19 02:06:05', 'scbk9tqol1u1424pi7krurqe2gq'),
 (9, 'personal-computers', 'Personal Computers', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 'uploads/dkM1MW7EalFqjbBZeUWhGrSVpKoqAHVCJnW3Mc5fPui8xMSxSMcyONlsfhmE.jpg', '2022-08-19 02:11:33', 'scbk9tqol1u1424pi7krurqe2gq'),
 (14, 'long-blog-post-test-2', 'Long Blog Post Test 3', 'Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.\r\n\r\nLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.\r\nLorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.', 'uploads/oH6FGFe9gWV71ajn8NtyEx0X8UY3cHROuz1rJTcBZU0rUdEMcESRmDxJohrN.jpg', '2022-08-25 21:48:12', 'scbk9tqol1u1424pi7krurqe2gq'),
-(17, 'welcome-to-eshopper-new-way-to-make-your-business', 'Welcome To Eshopper - New Way To Make Your Business', 'this awesome,this awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesome', 'uploads/Hwz5U9QcPliwHSmER0KAnC6eQQZeqQD76XBBltRyof52WiyHhph4UcPqfTRR.jpg', '2022-10-01 19:19:16', 'scbk9tqol1u1424pi7krurqe2gq');
+(17, 'welcome-to-eshopper-new-way-to-make-your-business', 'Welcome To Eshopper - New Way To Make Your Business', 'this awesome,this awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesomethis awesome', 'uploads/vRWDWdr5662m4zc0rKLwyQiOUGoe53TcDCUwLiJRGuMF5hnXRzDbrbgmEjAM.jpg', '2022-10-01 19:19:16', 'scbk9tqol1u1424pi7krurqe2gq'),
+(18, 'fazendo-o-debug-do-software', 'Fazendo O Debug Do Software', 'askahsdkjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkssssssssss\r\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', 'uploads/u1crzFQ17mzAGykdSGtmoDdZNdGCcVPoALu6vKiiKFo45a5OUVfD0FcNOLEE.jpg', '2022-11-07 01:19:23', 'scbk9tqol1u1424pi7krurqe2gq');
 
 -- --------------------------------------------------------
 
@@ -92,14 +93,14 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `category`, `disabled`, `parent`, `views`) VALUES
 (12, 'Food', 0, 0, 7),
 (13, 'Clothes', 0, 0, 1),
-(14, 'Fruits', 0, 0, 14),
-(17, 'Juices', 0, 21, 7),
+(14, 'Fruits', 0, 0, 15),
+(17, 'Juices', 0, 21, 9),
 (18, 'Nike', 0, 13, 2),
-(21, 'Drink', 0, 0, 6),
+(21, 'Drink', 0, 0, 11),
 (22, 'Meat', 0, 12, 5),
-(23, 'Computers', 0, 0, 38),
+(23, 'Computers', 0, 0, 41),
 (24, 'Another Categorys', 0, 0, 21),
-(26, 'Electrodomestico', 0, 0, 19);
+(26, 'Electrodomestico', 0, 0, 20);
 
 -- --------------------------------------------------------
 
@@ -258,7 +259,7 @@ INSERT INTO `products` (`id`, `user_url`, `description`, `category`, `brand`, `p
 (30, 'scbk9tqol1u1424pi7krurqe2gq', 'Lenovo Tablet', 14, 4, '12', 0, 'uploads/OjES3xUnS7nBSIw3CVtrMfdblp0t6MlHmmCpfi4YxFrC4WrXj1FqYKLEcoUE.jpg', '', '', '', '2022-09-15 01:19:18', 'teste'),
 (47, 'scbk9tqol1u1424pi7krurqe2gq', 'IPhone', 26, 3, '10', 0, 'uploads/1ad38Oqb2uVCAqa5JSgg6OI2qWAN5N6U352Wtdxol68kbuWVIpaXqswYv00X.jpg', '', '', '', '2021-09-16 00:17:33', 'dude'),
 (49, 'scbk9tqol1u1424pi7krurqe2gq', 'Testing', 22, 4, '120', 7, 'uploads/AN1GNL5KFqFWCStcoBFPXUjXAMzkv71hpyYh0UWviOkXngv74toWhv030GOb.jpg', '', '', '', '2022-09-21 02:22:38', 'testing'),
-(52, 'scbk9tqol1u1424pi7krurqe2gq', 'Debugging', 13, 5, '122', 0, 'uploads/WlECb8YKUrpu3fwb8EUwkdYXfeqFQOIp70jLPG2TMj7iX1mO0fB4sM2xfW7c.jpg', '', '', '', '2022-09-23 02:11:27', 'debugging');
+(52, 'scbk9tqol1u1424pi7krurqe2gq', 'Debugging', 13, 5, '122', 0, 'uploads/trDVUOu4ru6kjVjykdeRJjL3UDuDnmJrYfFqeTrjJq23hmYSfmbgQxAfpfnM.jpg', '', '', '', '2022-09-23 02:11:27', 'debugging');
 
 -- --------------------------------------------------------
 
@@ -310,9 +311,10 @@ CREATE TABLE `slider_images` (
 --
 
 INSERT INTO `slider_images` (`id`, `header1_text`, `header2_text`, `text`, `link`, `image`, `image2`, `disabled`) VALUES
-(1, 'E-SHOP Red Apple', 'Study Eating Our Delicious Fruit', 'This is the new stock fruit of our company', 'http://localhost/eshop/public/product_details/apple', 'uploads/K9Tcioqe3BklXo2w9JtV6unadHDexRpHi8YK80wavtoddaielPHhXWnuAvpg.jpg', NULL, 0),
-(2, 'E-Shopper Meat', 'Buy And Save Money,  Just For  USD100', 'E-shopper is awesome ecommerce website platform', 'http://localhost/eshop/public/product_details/carne-de-vaca', 'uploads/tRjjTBuF1yBWavHUSeVQ33iPT2vejciqMBpqYWuBBSX5d0ta0qfPqGHaaFMa.jpg', NULL, 0),
-(3, 'CORE I10', 'Compra Antes Q Acabe', 'Bem rápido esse mambo yha', 'http://localhost/eshop/public/product_details/pc-corei5-910km-ram-4gb-hd-500-38847', 'uploads/wc3HoWIKCKMywib2vxzpdhVBsm1CUoVlNPPoM3pwr22ZmahRYCpEy8l1Rj5J.jpg', NULL, 0);
+(1, 'E-SHOP Red Apple', 'Study Eating Our Delicious Fruit', 'This is the new stock fruit of our company', 'http://localhost/eshop/public/product_details/apple', 'uploads/o6c7U1p1NbWwUYGaxDDGYXhCFqJ1cEEdUyzxSt5zZsL3GLrGbqdJuRSvW3n3.jpg', NULL, 0),
+(2, 'E-Shopper Meat', 'Buy And Save Money,  Just For  USD100', 'E-shopper is awesome ecommerce website platform', 'http://localhost/eshop/public/product_details/carne-de-vaca', 'uploads/6Cn2UJLixQvk7Lj3DnGMYJyHXsftxzDKK2VDQwD24MFay2wuepql8dLalnCv.jpg', NULL, 0),
+(3, 'CORE I10', 'Compra Antes Q Acabe', 'Bem rápido esse mambo yha', 'http://localhost/eshop/public/product_details/pc-corei5-910km-ram-4gb-hd-500-38847', 'uploads/wc3HoWIKCKMywib2vxzpdhVBsm1CUoVlNPPoM3pwr22ZmahRYCpEy8l1Rj5J.jpg', NULL, 0),
+(5, 'New Promotion', 'ORDER NOW!', 'The supper promotion of all time!!', 'http://localhost/eshop/public/product_details/servidor', 'uploads/AySRqQ7sjWcnwj2DM8OwGRZEJPblhMhOvXYjSW5xvauxMwX24P6UYVD2eRnd.jpg', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -360,7 +362,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `url_address`, `name`, `email`, `password`, `date`, `rank`, `image`) VALUES
 (1, 'scbk9tqol1u1424pi7krurqe2gq', 'Nzola Kiampava', 'nzolakiampava@gmail.com', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-04-10 03:37:17', 'admin', 'uploads/eshop-817-ui-divya.jpg'),
-(272, '1gsm1sm09hegr49', 'Jordan', 'jordan@gmail.com', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-10-30 00:17:48', 'customer', '');
+(272, '1gsm1sm09hegr49', 'Jordan', 'jordan@gmail.com', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-10-30 00:17:48', 'customer', ''),
+(273, 'qi3ngnrbb9m04gd', '', '', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-11-06 20:25:13', '', ''),
+(274, 'ijkcb9fepuha0bl7d6sr5fm7lsiec', 'Delcio', 'delcio@gmail.com', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-11-06 21:07:22', 'customer', ''),
+(279, 'jfjl9', 'thecoder', 'thecoder@gmail.com', '4554f6fc1a2e2f6bdc63b0162bf0ca0650368dd4', '2022-11-06 22:13:42', 'customer', '');
 
 --
 -- Índices para tabelas despejadas
@@ -481,7 +486,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `brands`
@@ -541,7 +546,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT de tabela `slider_images`
 --
 ALTER TABLE `slider_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `states`
@@ -553,7 +558,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=281;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
