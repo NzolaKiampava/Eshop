@@ -12,9 +12,9 @@ if($_SERVER['SERVER_NAME'] == "localhost")
 	define('DB_HOST', "localhost");	
 }else
 {
-	define('DB_NAME', "id17135911_eshop_db");
-	define('DB_USER', "id17135911_root");
-	define('DB_PASS', "HsWXPJ{{+R=1&aBx");
+	define('DB_NAME', "id20079358_eshop_db");
+	define('DB_USER', "id20079358_root");
+	define('DB_PASS', "/j9rDO>nJ<h(v={(");
 	define('DB_TYPE', "mysql");
 	define('DB_HOST', "localhost");
 }
